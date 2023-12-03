@@ -1,0 +1,40 @@
+#include <Servo.h>
+bool rotation[] = {0,0,0,0,0};
+int targetAngle[] = {90,90,90,90,90};
+
+Servo myservo[5];
+void setup(){
+myservo[0].attach(A1);
+myservo[1].attach(A2);
+myservo[2].attach(A3);
+myservo[3].attach(A4);
+myservo[4].attach(A5);
+Serial.begin(9600);
+}
+void check(){
+for(int i=0; i<5; i++){
+    if(myservo[i].read()== targetAngle[i]){
+    rotation[i] = false;
+  }
+ }
+}
+void loop() {
+for(int j=0; j<5; j++){
+  if(rotation[j] == false){
+    myservo[j].write(180);
+    delay(150);
+    targetAngle[j] = 180;
+    rotation[j] = 1;
+    Serial.println(rotation[j]);
+   }
+} 
+check();
+if(rotation == true){
+  for(int k=0; k<5; k++){
+    myservo[k].write(90);
+    delay(150);
+    targetAngle[k] = 90;
+    rotation[k] = 0;
+    Serial.println(rotation[k]);
+  }
+   }}
